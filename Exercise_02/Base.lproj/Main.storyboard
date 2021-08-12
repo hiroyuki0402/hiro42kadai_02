@@ -40,9 +40,6 @@
                                     <segment title="x"/>
                                     <segment title="÷"/>
                                 </segments>
-                                <connections>
-                                    <action selector="calculationSymbol:" destination="BYZ-38-t0r" eventType="valueChanged" id="chs-PT-WWw"/>
-                                </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R9u-lK-FfC">
                                 <rect key="frame" x="136" y="301" width="133" height="30"/>
@@ -51,7 +48,7 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <action selector="calculationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ngV-xP-1a3"/>
+                                    <action selector="calculateButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ngV-xP-1a3"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8vo-cM-b8S">
