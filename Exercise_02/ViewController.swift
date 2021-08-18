@@ -6,56 +6,67 @@
 //
 
 import UIKit
-enum CalculationSymbol: Int {
-    case addition = 0, subtraction = 1, multiplication = 2, division = 3
-}
 
 class ViewController: UIViewController, UITextFieldDelegate {
-    private var _calculationSymbol = Int()
-    @IBOutlet var textField01: UITextField!
-    @IBOutlet var textField02: UITextField!
-    @IBOutlet var calculationSymbolObj: UISegmentedControl!
-    @IBOutlet var resultLabel: UILabel!
+    @IBOutlet private var textField01: UITextField!
+    @IBOutlet private var textField02: UITextField!
+    @IBOutlet private var operatorSegmentedControl: UISegmentedControl!
+    @IBOutlet private var resultLabel: UILabel!
+    private let operators:[Operator] = [.addition,.subtraction,.multiplication,.division]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        textField01.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
-        textField02.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
-        textField01.delegate = self
-        textField02.delegate = self
         // 初回表示時+を選択
-        calculationSymbolObj.selectedSegmentIndex = 0
+        operatorSegmentedControl.selectedSegmentIndex = 0
         // Do any additional setup after loading the view.
     }
+    
     // MARK: METHODs
-    @IBAction func calculateButton(_ sender: Any) {
-        let val01 = Int(textField01.text!) ?? 0
-        let val02 = Int(textField02.text!) ?? 0
-        let segmentIndex = calculationSymbolObj.selectedSegmentIndex
-        switch CalculationSymbol(rawValue: segmentIndex) {
+    
+    @IBAction func calculationButton(_ sender: Any) {
+        
+        let operatorsIndex = operators[operatorSegmentedControl.selectedSegmentIndex]
+        
+        switch operatorsIndex {
         case .addition:
-            resultLabel.text = String(val01 + val02)
-        case .subtraction:
-            resultLabel.text = String(val01 - val02)
+            resultLabel.text = operatorsIndex.calculate(val01: Int(textField01.text!) ?? 0, val02: Int(textField02.text!) ?? 0)
+        case .division:
+            resultLabel.text = operatorsIndex.calculate(val01: Int(textField01.text!) ?? 0, val02: Int(textField02.text!) ?? 0)
         case .multiplication:
-            resultLabel.text = String(val01 * val02)
-        case.division:
-            if val02 == 0 {
-                resultLabel.text = "割る数には0以外を入力してください"
-                break
-            } else {
-                resultLabel.text = String(val01 / val02)
-            }
-        default:
-            break
+            resultLabel.text =  operatorsIndex.calculate(val01: Int(textField01.text!) ?? 0, val02: Int(textField02.text!) ?? 0)
+        case.subtraction:
+            resultLabel.text =  operatorsIndex.calculate(val01: Int(textField01.text!) ?? 0, val02: Int(textField02.text!) ?? 0)
         }
     }
     
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.endEditing(true)
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+        view.endEditing(true)
+    }
+}
+// MARK: ENUM
+
+enum Operator: Int {
+    case addition,
+         subtraction,
+         multiplication,
+         division
+    
+    func calculate(val01:Int,val02:Int)  -> String {
+        
+        switch self {
+        case .addition:
+            return (val01 + val02).description
+        case .subtraction:
+            return (val01 - val02).description
+        case .multiplication:
+            return (val01 * val02).description
+        case .division:
+            if val02 == 0 {
+                return "割る数には0以外を入力してください"
+            }else{
+                return (val01 / val02).description
+            }
+        }
     }
 }
