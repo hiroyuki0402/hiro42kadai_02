@@ -75,13 +75,13 @@ class _ViewController: UIViewController, UITextFieldDelegate {
         
         switch operatorsIndex {
         case .addition:
-            resultLabel.text = operatorsIndex.calculate(val01: Int(textField.text!) ?? 0, val02: Int(textField2.text!) ?? 0)
+            resultLabel.text = operatorsIndex.calculate(val01: Double(textField.text!) ?? 0, val02: Double(textField2.text!) ?? 0)
         case .division:
-            resultLabel.text = operatorsIndex.calculate(val01: Int(textField.text!) ?? 0, val02: Int(textField2.text!) ?? 0)
+            resultLabel.text = operatorsIndex.calculate(val01: Double(textField.text!) ?? 0, val02: Double(textField2.text!) ?? 0)
         case .multiplication:
-            resultLabel.text =  operatorsIndex.calculate(val01: Int(textField.text!) ?? 0, val02: Int(textField2.text!) ?? 0)
+            resultLabel.text =  operatorsIndex.calculate(val01: Double(textField.text!) ?? 0, val02: Double(textField2.text!) ?? 0)
         case.subtraction:
-            resultLabel.text =  operatorsIndex.calculate(val01: Int(textField.text!) ?? 0, val02: Int(textField2.text!) ?? 0)
+            resultLabel.text =  operatorsIndex.calculate(val01: Double(textField.text!) ?? 0, val02: Double(textField2.text!) ?? 0)
         }
         view.endEditing(true)
     }

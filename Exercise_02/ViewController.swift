@@ -24,21 +24,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
     // MARK: METHODs
     
     @IBAction func calculationButton(_ sender: Any) {
-        
         let operatorsIndex = operators[operatorSegmentedControl.selectedSegmentIndex]
-        
         switch operatorsIndex {
         case .addition:
-            resultLabel.text = operatorsIndex.calculate(val01: Int(textField01.text!) ?? 0, val02: Int(textField02.text!) ?? 0)
+            resultLabel.text = operatorsIndex.calculate(val01: Double(textField01.text!) ?? 0, val02: Double(textField02.text!) ?? 0)
         case .division:
-            resultLabel.text = operatorsIndex.calculate(val01: Int(textField01.text!) ?? 0, val02: Int(textField02.text!) ?? 0)
+            resultLabel.text = operatorsIndex.calculate(val01: Double(textField01.text!) ?? 0, val02: Double(textField02.text!) ?? 0)
         case .multiplication:
-            resultLabel.text =  operatorsIndex.calculate(val01: Int(textField01.text!) ?? 0, val02: Int(textField02.text!) ?? 0)
+            resultLabel.text =  operatorsIndex.calculate(val01: Double(textField01.text!) ?? 0, val02: Double(textField02.text!) ?? 0)
         case.subtraction:
-            resultLabel.text =  operatorsIndex.calculate(val01: Int(textField01.text!) ?? 0, val02: Int(textField02.text!) ?? 0)
+            resultLabel.text =  operatorsIndex.calculate(val01: Double(textField01.text!) ?? 0, val02: Double(textField02.text!) ?? 0)
         }
     }
-    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -52,8 +49,7 @@ enum Operator: Int {
          multiplication,
          division
     
-    func calculate(val01:Int,val02:Int)  -> String {
-        
+    func calculate(val01:Double,val02:Double)  -> String {
         switch self {
         case .addition:
             return (val01 + val02).description
