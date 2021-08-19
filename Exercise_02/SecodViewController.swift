@@ -7,38 +7,36 @@
 
 import UIKit
 
-class _ViewController: UIViewController, UITextFieldDelegate {
-    
-    private let screenSize_height = UIScreen.main.bounds.height
-    private let screenSize_width = UIScreen.main.bounds.width
-    private let operators:[Operator] = [.addition,.subtraction,.multiplication,.division]
-    
-    
-    private let textField:UITextField = {
+class SecodViewController: UIViewController, UITextFieldDelegate {
+    private let screenSizeHeight = UIScreen.main.bounds.height
+    private let screenSizeWidth = UIScreen.main.bounds.width
+    private let operators: [Operator] = [.addition, .subtraction, .multiplication, .division]
+
+    private let textField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .lightGray
         textField.keyboardType = .numberPad
         textField.borderStyle = .roundedRect
         return textField
     }()
-    
-    private let textField2:UITextField = {
+
+    private let textField2: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .lightGray
         textField.keyboardType = .numberPad
         textField.borderStyle = .roundedRect
         return textField
     }()
-    
-    private let operatorSegmentedControl:UISegmentedControl = {
-        let segmentParams = ["+","-","x","÷"]
+
+    private let operatorSegmentedControl: UISegmentedControl = {
+        let segmentParams = ["+", "-", "x", "÷"]
         let segmentedControl = UISegmentedControl(items: segmentParams)
         segmentedControl.backgroundColor = .lightGray
         segmentedControl.selectedSegmentTintColor = .darkGray
         segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
         return segmentedControl
     }()
-    
+
     private let resultLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
@@ -49,7 +47,7 @@ class _ViewController: UIViewController, UITextFieldDelegate {
         label.textAlignment = .left
         return label
     }()
-    
+
     private let calculationButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .clear
@@ -60,41 +58,51 @@ class _ViewController: UIViewController, UITextFieldDelegate {
         button.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
         return button
     }()
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpLayout()
         // Do any additional setup after loading the view.
     }
-    
-    
-    @objc private func tapAction(){
-        
+
+    @objc
+    func tapAction() {
         let operatorsIndex = operators[operatorSegmentedControl.selectedSegmentIndex]
-        
         switch operatorsIndex {
         case .addition:
-            resultLabel.text = operatorsIndex.calculate(val01: Double(textField.text!) ?? 0, val02: Double(textField2.text!) ?? 0)
+            resultLabel.text = operatorsIndex.calculate(val01: Double(textField.text ?? "0") ?? 0,
+                                                        val02: Double(textField2.text ?? "0") ?? 0)
+
         case .division:
-            resultLabel.text = operatorsIndex.calculate(val01: Double(textField.text!) ?? 0, val02: Double(textField2.text!) ?? 0)
+            resultLabel.text = operatorsIndex.calculate(val01: Double(textField.text ?? "0") ?? 0,
+                                                        val02: Double(textField2.text ?? "0") ?? 0)
+
         case .multiplication:
-            resultLabel.text =  operatorsIndex.calculate(val01: Double(textField.text!) ?? 0, val02: Double(textField2.text!) ?? 0)
+            resultLabel.text = operatorsIndex.calculate(val01: Double(textField.text ?? "0") ?? 0,
+                                                        val02: Double(textField2.text ?? "0") ?? 0)
+
         case.subtraction:
-            resultLabel.text =  operatorsIndex.calculate(val01: Double(textField.text!) ?? 0, val02: Double(textField2.text!) ?? 0)
+            resultLabel.text = operatorsIndex.calculate(val01: Double(textField.text ?? "0") ?? 0,
+                                                        val02: Double(textField2.text ?? "0") ?? 0)
         }
         view.endEditing(true)
     }
-    
+
     private func setUpLayout() {
         textField.delegate = self
         textField2.delegate = self
         view.backgroundColor = .white
         // 初回表示時+を選択
         operatorSegmentedControl.selectedSegmentIndex = 0
-        
-        let stackView = UIStackView(arrangedSubviews: [textField,textField2,operatorSegmentedControl,calculationButton,resultLabel])
-        
+
+        let stackView = UIStackView(arrangedSubviews:
+                                        [textField,
+                                         textField2,
+                                         operatorSegmentedControl,
+                                         calculationButton,
+                                         resultLabel
+                                        ])
+
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.spacing = 20
@@ -104,32 +112,53 @@ class _ViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(operatorSegmentedControl)
         view.addSubview(calculationButton)
         view.addSubview(resultLabel)
-        
+
         [
             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             stackView.leftAnchor.constraint(equalTo: view.leftAnchor),
             stackView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ].forEach { $0.isActive = true }
-        
-        stackView.anchor(_leftAnchor: view.leftAnchor, _rightAnchor: view.rightAnchor, _centerYAnchor: view.centerYAnchor)
-        
-        textField.anchor(_topAnchor: stackView.topAnchor, _leftAnchor: view.leftAnchor, _rightAnchor: view.rightAnchor, _height: 50, _topPadding: 100, _leftPadding: 40, _rightPadding: 40)
-        
-        textField2.anchor(_topAnchor: textField.bottomAnchor, _leftAnchor: view.leftAnchor, _rightAnchor: view.rightAnchor, _height: 50, _topPadding: 20, _leftPadding: 40, _rightPadding: 40)
-        
-        operatorSegmentedControl.anchor(_topAnchor: textField2.bottomAnchor, _leftAnchor: view.leftAnchor, _rightAnchor: view.rightAnchor, _height: 50, _topPadding: 20, _leftPadding: 40, _rightPadding: 40)
-        
-        calculationButton.anchor(_topAnchor: operatorSegmentedControl.bottomAnchor, _leftAnchor: view.leftAnchor, _rightAnchor: view.rightAnchor, _height: 50, _topPadding: 15, _leftPadding: 50, _rightPadding: 50)
-        
-        resultLabel.anchor(_topAnchor: calculationButton.bottomAnchor, _leftAnchor: view.leftAnchor, _rightAnchor: view.rightAnchor, _height: 50, _topPadding: 20, _leftPadding: 25, _rightPadding: 25)
+
+        stackView.anchor(_leftAnchor: view.leftAnchor,
+                         _rightAnchor: view.rightAnchor,
+                         _centerYAnchor: view.centerYAnchor)
+
+        textField.anchor(_topAnchor: stackView.topAnchor,
+                         _leftAnchor: view.leftAnchor,
+                         _rightAnchor: view.rightAnchor,
+                         _height: 50, _topPadding: 100,
+                         _leftPadding: 40, _rightPadding: 40)
+
+        textField2.anchor(_topAnchor: textField.bottomAnchor,
+                          _leftAnchor: view.leftAnchor,
+                          _rightAnchor: view.rightAnchor,
+                          _height: 50, _topPadding: 20,
+                          _leftPadding: 40, _rightPadding: 40)
+
+        operatorSegmentedControl.anchor(_topAnchor: textField2.bottomAnchor,
+                                        _leftAnchor: view.leftAnchor,
+                                        _rightAnchor: view.rightAnchor,
+                                        _height: 50, _topPadding: 20,
+                                        _leftPadding: 40, _rightPadding: 40)
+
+        calculationButton.anchor(_topAnchor: operatorSegmentedControl.bottomAnchor,
+                                 _leftAnchor: view.leftAnchor,
+                                 _rightAnchor: view.rightAnchor,
+                                 _height: 50, _topPadding: 15,
+                                 _leftPadding: 50, _rightPadding: 50)
+
+        resultLabel.anchor(_topAnchor: calculationButton.bottomAnchor,
+                           _leftAnchor: view.leftAnchor,
+                           _rightAnchor: view.rightAnchor,
+                           _height: 50, _topPadding: 20,
+                           _leftPadding: 25, _rightPadding: 25)
     }
-    
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
-    
+
     /*
      // MARK: - Navigation
      
@@ -139,26 +168,21 @@ class _ViewController: UIViewController, UITextFieldDelegate {
      // Pass the selected object to the new view controller.
      }
      */
-    
 }
 
 extension UIView {
-    
     func anchor(_topAnchor: NSLayoutYAxisAnchor? = nil,
                 _leftAnchor: NSLayoutXAxisAnchor? = nil,
                 _bottomAnchor: NSLayoutYAxisAnchor? = nil,
                 _rightAnchor: NSLayoutXAxisAnchor? = nil,
                 _centerYAnchor: NSLayoutYAxisAnchor? = nil,
                 _centerXAnchor: NSLayoutXAxisAnchor? = nil,
-                _width: CGFloat? = nil,
-                _height: CGFloat? = nil,
-                _topPadding: CGFloat = 0,
-                _bottomPadding: CGFloat = 0,
-                _leftPadding: CGFloat = 0,
-                _rightPadding: CGFloat = 0){
-        
+                _width: CGFloat? = nil, _height: CGFloat? = nil,
+                _topPadding: CGFloat = 0, _bottomPadding: CGFloat = 0,
+                _leftPadding: CGFloat = 0, _rightPadding: CGFloat = 0
+    ) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        
+
         if let top = _topAnchor {
             topAnchor.constraint(equalTo: top, constant: _topPadding).isActive = true
         }
@@ -185,5 +209,3 @@ extension UIView {
         }
     }
 }
-
-
