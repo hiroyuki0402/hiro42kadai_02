@@ -96,12 +96,8 @@ class SecodViewController: UIViewController, UITextFieldDelegate {
         operatorSegmentedControl.selectedSegmentIndex = 0
 
         let stackView = UIStackView(arrangedSubviews:
-                                        [textField,
-                                         textField2,
-                                         operatorSegmentedControl,
-                                         calculationButton,
-                                         resultLabel
-                                        ])
+                                        [textField, textField2, operatorSegmentedControl, calculationButton,
+                                         resultLabel])
 
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
@@ -120,39 +116,28 @@ class SecodViewController: UIViewController, UITextFieldDelegate {
             stackView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ].forEach { $0.isActive = true }
 
-        stackView.anchor(_leftAnchor: view.leftAnchor,
-                         _rightAnchor: view.rightAnchor,
-                         _centerYAnchor: view.centerYAnchor)
+        stackView.anchor(left: view.leftAnchor, right: view.rightAnchor,
+                         centerY: view.centerYAnchor)
 
-        textField.anchor(_topAnchor: stackView.topAnchor,
-                         _leftAnchor: view.leftAnchor,
-                         _rightAnchor: view.rightAnchor,
-                         _height: 50, _topPadding: 100,
-                         _leftPadding: 40, _rightPadding: 40)
+        textField.anchor(top: stackView.topAnchor,
+                         left: view.leftAnchor, right: view.rightAnchor, height: 50, topPadding: 100,
+                         leftPadding: 40, rightPadding: 40)
 
-        textField2.anchor(_topAnchor: textField.bottomAnchor,
-                          _leftAnchor: view.leftAnchor,
-                          _rightAnchor: view.rightAnchor,
-                          _height: 50, _topPadding: 20,
-                          _leftPadding: 40, _rightPadding: 40)
+        textField2.anchor(top: textField.bottomAnchor,
+                          left: view.leftAnchor, right: view.rightAnchor, height: 50, topPadding: 20,
+                          leftPadding: 40, rightPadding: 40)
 
-        operatorSegmentedControl.anchor(_topAnchor: textField2.bottomAnchor,
-                                        _leftAnchor: view.leftAnchor,
-                                        _rightAnchor: view.rightAnchor,
-                                        _height: 50, _topPadding: 20,
-                                        _leftPadding: 40, _rightPadding: 40)
+        operatorSegmentedControl.anchor(top: textField2.bottomAnchor,
+                                        left: view.leftAnchor, right: view.rightAnchor, height: 50, topPadding: 20,
+                                        leftPadding: 40, rightPadding: 40)
 
-        calculationButton.anchor(_topAnchor: operatorSegmentedControl.bottomAnchor,
-                                 _leftAnchor: view.leftAnchor,
-                                 _rightAnchor: view.rightAnchor,
-                                 _height: 50, _topPadding: 15,
-                                 _leftPadding: 50, _rightPadding: 50)
+        calculationButton.anchor(top: operatorSegmentedControl.bottomAnchor,
+                                 left: view.leftAnchor, right: view.rightAnchor, height: 50, topPadding: 15,
+                                 leftPadding: 50, rightPadding: 50)
 
-        resultLabel.anchor(_topAnchor: calculationButton.bottomAnchor,
-                           _leftAnchor: view.leftAnchor,
-                           _rightAnchor: view.rightAnchor,
-                           _height: 50, _topPadding: 20,
-                           _leftPadding: 25, _rightPadding: 25)
+        resultLabel.anchor(top: calculationButton.bottomAnchor,
+                           left: view.leftAnchor, right: view.rightAnchor, height: 50, topPadding: 20,
+                           leftPadding: 25, rightPadding: 25)
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -161,7 +146,7 @@ class SecodViewController: UIViewController, UITextFieldDelegate {
 
     /*
      // MARK: - Navigation
-     
+
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destination.
@@ -171,41 +156,41 @@ class SecodViewController: UIViewController, UITextFieldDelegate {
 }
 
 extension UIView {
-    func anchor(_topAnchor: NSLayoutYAxisAnchor? = nil,
-                _leftAnchor: NSLayoutXAxisAnchor? = nil,
-                _bottomAnchor: NSLayoutYAxisAnchor? = nil,
-                _rightAnchor: NSLayoutXAxisAnchor? = nil,
-                _centerYAnchor: NSLayoutYAxisAnchor? = nil,
-                _centerXAnchor: NSLayoutXAxisAnchor? = nil,
-                _width: CGFloat? = nil, _height: CGFloat? = nil,
-                _topPadding: CGFloat = 0, _bottomPadding: CGFloat = 0,
-                _leftPadding: CGFloat = 0, _rightPadding: CGFloat = 0
+    func anchor( top: NSLayoutYAxisAnchor? = nil,
+                 left: NSLayoutXAxisAnchor? = nil,
+                 bottom: NSLayoutYAxisAnchor? = nil,
+                 right: NSLayoutXAxisAnchor? = nil,
+                 centerY: NSLayoutYAxisAnchor? = nil,
+                 centerX: NSLayoutXAxisAnchor? = nil,
+                 width: CGFloat? = nil, height: CGFloat? = nil,
+                 topPadding: CGFloat = 0, bottomPadding: CGFloat = 0,
+                 leftPadding: CGFloat = 0, rightPadding: CGFloat = 0
     ) {
         self.translatesAutoresizingMaskIntoConstraints = false
 
-        if let top = _topAnchor {
-            topAnchor.constraint(equalTo: top, constant: _topPadding).isActive = true
+        if let top = top {
+            topAnchor.constraint(equalTo: top, constant: topPadding).isActive = true
         }
-        if let left = _leftAnchor {
-            leftAnchor.constraint(equalTo: left, constant: _leftPadding).isActive = true
+        if let left = left {
+            leftAnchor.constraint(equalTo: left, constant: leftPadding).isActive = true
         }
-        if let bottom = _bottomAnchor {
-            bottomAnchor.constraint(equalTo: bottom, constant: -_bottomPadding).isActive = true
+        if let bottom = bottom {
+            bottomAnchor.constraint(equalTo: bottom, constant: -bottomPadding).isActive = true
         }
-        if let right = _rightAnchor {
-            rightAnchor.constraint(equalTo: right, constant: -_rightPadding).isActive = true
+        if let right = right {
+            rightAnchor.constraint(equalTo: right, constant: -rightPadding).isActive = true
         }
-        if let centerY = _centerYAnchor {
+        if let centerY = centerY {
             centerYAnchor.constraint(equalTo: centerY).isActive = true
         }
-        if let centerX = _centerXAnchor {
+        if let centerX = centerX {
             centerXAnchor.constraint(equalTo: centerX).isActive = true
         }
-        if let width = _width {
+        if let width = width {
             widthAnchor.constraint(equalToConstant: width).isActive = true
         }
-        if let heigth = _height {
-            heightAnchor.constraint(equalToConstant: heigth).isActive = true
+        if let height = height {
+            heightAnchor.constraint(equalToConstant: height).isActive = true
         }
     }
 }
