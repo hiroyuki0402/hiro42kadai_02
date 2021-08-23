@@ -18,28 +18,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         // 初回表示時+を選択
         operatorSegmentedControl.selectedSegmentIndex = 0
-        // Do any additional setup after loading the view.
     }
+
     // MARK: METHODs
     @IBAction private func calculationButton(_ sender: Any) {
-        let operatorsIndex = operators[operatorSegmentedControl.selectedSegmentIndex]
-        switch operatorsIndex {
-        case .addition:
-            resultLabel.text = operatorsIndex.calculate(val01: Double(textField01.text ?? "0") ?? 0,
-                                                        val02: Double(textField02.text ?? "0") ?? 0)
+        let value1 = Double(textField01.text ?? "0") ?? 0
+        let value2 = Double(textField02.text ?? "0") ?? 0
 
-        case .division:
-            resultLabel.text = operatorsIndex.calculate(val01: Double(textField01.text ?? "0") ?? 0,
-                                                        val02: Double(textField02.text ?? "0") ?? 0)
-
-        case .multiplication:
-            resultLabel.text = operatorsIndex.calculate(val01: Double(textField01.text ?? "0") ?? 0,
-                                                        val02: Double(textField02.text ?? "0") ?? 0)
-
-        case.subtraction:
-            resultLabel.text = operatorsIndex.calculate(val01: Double(textField01.text ?? "0") ?? 0,
-                                                        val02: Double(textField02.text ?? "0") ?? 0)
-        }
+        let selectedOperator = operators[operatorSegmentedControl.selectedSegmentIndex]
+        resultLabel.text = selectedOperator.calculate(val01: value1, val02: value2)
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -57,22 +44,16 @@ public enum Operator: Int {
     func calculate(val01: Double, val02: Double) -> String {
         switch self {
         case .addition:
-            return (val01 + val02).description
-
+            return String(val01 + val02)
         case .subtraction:
-
-            return (val01 - val02).description
-
+            return String(val01 - val02)
         case .multiplication:
-
-            return (val01 * val02).description
-
+            return String(val01 * val02)
         case .division:
-
             if val02 == 0 {
                 return "割る数には0以外を入力してください"
             } else {
-                return (val01 / val02).description
+                return String(val01 / val02)
             }
         }
     }
